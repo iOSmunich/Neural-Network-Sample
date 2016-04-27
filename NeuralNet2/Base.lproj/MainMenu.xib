@@ -104,17 +104,37 @@
         <window title="NeuralNet2" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="800" height="600"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="784" height="563"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
+                <rect key="frame" x="0.0" y="0.0" width="784" height="563"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="SKView">
-                        <rect key="frame" x="20" y="245" width="519" height="335"/>
+                    <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="SKView">
+                        <rect key="frame" x="20" y="107" width="519" height="436"/>
                     </customView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="af6-al-6gX">
-                        <rect key="frame" x="43" y="163" width="63" height="32"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Czv-4l-NXA">
+                        <rect key="frame" x="40" y="25" width="69" height="32"/>
+                        <buttonCell key="cell" type="push" title="start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="k1u-Nx-kwD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="start:" target="494" id="AfF-wo-gWt"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="euT-MQ-2ZF">
+                        <rect key="frame" x="126" y="25" width="67" height="32"/>
+                        <buttonCell key="cell" type="push" title="stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AMj-ZX-8ln">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="stop:" target="494" id="Dho-ko-keh"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="af6-al-6gX">
+                        <rect key="frame" x="215" y="25" width="63" height="32"/>
                         <buttonCell key="cell" type="push" title="add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Ax-0X-Klc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -123,8 +143,16 @@
                             <action selector="add:" target="494" id="NB6-Ah-Q3U"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1F4-xM-IR2">
-                        <rect key="frame" x="152" y="163" width="59" height="32"/>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mOB-BY-Z05">
+                        <rect key="frame" x="565" y="107" width="199" height="436"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="6Wv-H4-Yu9">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1F4-xM-IR2">
+                        <rect key="frame" x="300" y="25" width="59" height="32"/>
                         <buttonCell key="cell" type="push" title="del" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="S7d-IU-c6m">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -134,11 +162,27 @@
                         </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Czv-4l-NXA" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="46" id="35K-Uh-z36"/>
+                    <constraint firstItem="539" firstAttribute="leading" secondItem="372" secondAttribute="leading" constant="20" symbolic="YES" id="7Nn-2K-Q2M"/>
+                    <constraint firstItem="Czv-4l-NXA" firstAttribute="top" secondItem="539" secondAttribute="bottom" constant="54" id="BgD-BP-3jX"/>
+                    <constraint firstItem="euT-MQ-2ZF" firstAttribute="baseline" secondItem="af6-al-6gX" secondAttribute="baseline" id="ClH-tc-RcM"/>
+                    <constraint firstItem="Czv-4l-NXA" firstAttribute="baseline" secondItem="euT-MQ-2ZF" secondAttribute="baseline" id="F5k-ad-y0C"/>
+                    <constraint firstAttribute="bottom" secondItem="Czv-4l-NXA" secondAttribute="bottom" constant="32" id="R8p-uK-EUG"/>
+                    <constraint firstItem="af6-al-6gX" firstAttribute="baseline" secondItem="1F4-xM-IR2" secondAttribute="baseline" id="SP5-mL-4q3"/>
+                    <constraint firstItem="euT-MQ-2ZF" firstAttribute="leading" secondItem="Czv-4l-NXA" secondAttribute="trailing" constant="29" id="V0e-se-7oX"/>
+                    <constraint firstItem="1F4-xM-IR2" firstAttribute="leading" secondItem="af6-al-6gX" secondAttribute="trailing" constant="34" id="cIb-kg-gjU"/>
+                    <constraint firstAttribute="trailing" secondItem="539" secondAttribute="trailing" constant="245" id="iIY-al-hDi"/>
+                    <constraint firstItem="539" firstAttribute="top" secondItem="372" secondAttribute="top" constant="20" symbolic="YES" id="rSn-yb-6TK"/>
+                    <constraint firstItem="af6-al-6gX" firstAttribute="leading" secondItem="euT-MQ-2ZF" secondAttribute="trailing" constant="34" id="yyv-ZS-PNE"/>
+                </constraints>
             </view>
+            <point key="canvasLocation" x="592" y="335.5"/>
         </window>
         <customObject id="494" customClass="AppDelegate" customModule="NeuralNet2" customModuleProvider="target">
             <connections>
                 <outlet property="skview" destination="539" id="0PD-1G-nDM"/>
+                <outlet property="txtField" destination="mOB-BY-Z05" id="MXL-6D-Paq"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>

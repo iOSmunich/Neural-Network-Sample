@@ -10,8 +10,30 @@ import Cocoa
 
 class GameScene: SKScene {
     
+    
+    
+    // MARK: logic block
+    
+    
+    func start() {
+        let inputs = [1,1,1] as [CGFloat]
+        inLayer.setInputsAndRun(inputs)
+        
+        target?.performSelector(action, withObject:"abc")
+    }
+        
+    
+    
+    
+    // MARK: GUI
+    
     var inLayer = Layer.newInputLayer()
     var outLayer = Layer.newOutputLayer()
+    
+    var target:AnyObject?
+    var action:AnyObject?
+    
+    
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -20,8 +42,6 @@ class GameScene: SKScene {
         addChild(outLayer)
         
         inLayer.outLayer = outLayer
-        outLayer.inLayer = inLayer
-        
         
     }
     
@@ -39,7 +59,6 @@ class GameScene: SKScene {
             ly.drawConnection()
         }
         
-        
     }
     
     
@@ -49,12 +68,10 @@ class GameScene: SKScene {
             
             outLayer.removeFromParent()
             let newLayer = Layer.newHiddenLayer()
-            let lastLayer = outLayer.inLayer
+            let lastNode = outLayer.inLayer
             
-            newLayer.inLayer = lastLayer
             newLayer.outLayer = outLayer
-            lastLayer?.outLayer = newLayer
-            outLayer.inLayer = newLayer
+            lastNode?.outLayer = newLayer
             
             addChild(newLayer)
             addChild(outLayer)
@@ -74,10 +91,9 @@ class GameScene: SKScene {
             
             outLayer.removeFromParent()
             
-            let inLayer = outLayer.inLayer?.inLayer
+            let lastNode = outLayer.inLayer?.inLayer //last item
             outLayer.inLayer?.removeFromParent()
-            outLayer.inLayer = inLayer
-            inLayer?.outLayer = outLayer
+            lastNode?.outLayer = outLayer
             
             addChild(outLayer)
             outLayer.drawConnection()
@@ -102,7 +118,7 @@ class GameScene: SKScene {
         super.addChild(node)
     }
     
-
+    
 }
 
 

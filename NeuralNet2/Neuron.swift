@@ -8,6 +8,7 @@
 
 import Cocoa
 import SpriteKit
+import GameplayKit.GKRandomSource
 
 class Neuron: SKNode {
     
@@ -15,21 +16,76 @@ class Neuron: SKNode {
     
     private var bgNode:BgNode = BgNode(color: SKColor.grayColor(), size:CGSizeMake(20, 20))
     
-    var lines:SKNode = SKNode()
+    private let lines:SKNode = SKNode()
     
     var parentLayer:Layer!
     
-    var inNeurons:[Neuron] {
-        
-        if let _ = parentLayer.inLayer?.neurons {
-            return parentLayer.inLayer!.neurons
-        }
-        
-        return []
+    
+    var inputNeurons:[Neuron]? {
+        return parentLayer?.inLayer?.neurons
     }
     
     
+    
+    
+    
+    // MARK: neuron logic
+    
+    private (set) var weights:[CGFloat] = []
+    private (set) var bias:CGFloat = 0
+    private (set) var sum:CGFloat = 0
+    private (set) var output:CGFloat = 0
+    private (set) var inputs:[CGFloat] = []
+    
+    
+    
+    
+    
+    func setInputsAndCalc(inputs:[CGFloat]) {
+        
+        self.inputs = inputs
+        syncWeights()
+        calc()
+    }
+    
+    
+    
 
+    private func calc() {
+        
+
+        //calc sum
+        sum = 0
+        for idx in 0...inputs.count {
+            sum += inputs[idx] * weights[idx]
+        }
+        sum += bias
+        
+        output = max(0,sum)
+    }
+    
+    
+    
+    private func syncWeights() {
+        
+        //sync weights count
+        while weights.count < inputs.count {
+            weights.append(randomWeight())
+        }
+        while weights.count > inputs.count {
+            weights.removeLast()
+        }
+        
+    }
+    
+    
+    let gaussDistribution = GKGaussianDistribution(randomSource: GKRandomSource(), lowestValue: -1, highestValue: +1)
+    func randomWeight() -> CGFloat {
+
+        let vv = gaussDistribution.nextUniform()
+        print("rand gaus float:",vv)
+        return CGFloat(vv)
+    }
     
     
     
@@ -77,18 +133,21 @@ class Neuron: SKNode {
     }
     
     
-
+    
     
     
     // MARK: draw function
     
     func drawConnections() {
         
+        guard let _ = inputNeurons else {
+            return
+        }
+        
+        
         lines.removeAllChildren()
         
-        
-        
-        for node in inNeurons {
+        for node in inputNeurons! {
             
             let p0 = convertPoint(node.position, fromNode: node.parent!)
             let p3 = convertPoint(position, fromNode: parent!)
@@ -113,6 +172,16 @@ class Neuron: SKNode {
     
     
     
+    private func updateLineWidth() {
+        
+        for (idx,line) in lines.children.enumerate() {
+            let spline = line as! SKShapeNode
+            spline.lineWidth = CGFloat(abs(weights[idx]))
+        
+        }
+    }
+    
+    
 }
 
 
@@ -123,7 +192,7 @@ class BgNode: SKSpriteNode {
     
     
     override func rightMouseUp(theEvent: NSEvent) {
-        print(theEvent.locationInNode(scene!))
+        parent?.rightMouseUp(theEvent)
     }
     
     override func scrollWheel(theEvent: NSEvent) {

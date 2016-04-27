@@ -14,12 +14,44 @@ import SpriteKit
 class Layer: SKNode {
     
     
-    var inLayer:Layer?
-    var outLayer:Layer?
+    // MARK: Layer logic block
+    
+    private (set) var inputs:[CGFloat] = []
+    private (set) var outputs:[CGFloat] = []
+    
+    
+    func setInputsAndRun(inputs:[CGFloat]) {
+    
+        self.inputs = inputs
+        
+    }
+    
+    
+    
+    
+    // MARK: Layer GUI
+    
+    
+    
+    
+    struct LayerTypeName {
+        
+        static let hidden = "input layer"
+        static let input  = "hidden layer"
+        static let output = "output layer"
+    }
+    
+    
+    private (set) var inLayer:Layer?
+    var outLayer:Layer? {
+        didSet {
+            outLayer?.inLayer = self
+        }
+    }
     
     var neurons:[Neuron]{
         return children.filter({ (node) -> Bool in
-            return node.isKindOfClass(Neuron)
+            return node is Neuron
         }) as! [Neuron]
     }
     
@@ -32,7 +64,7 @@ class Layer: SKNode {
         
         let ly = Layer()
         ly.userInteractionEnabled = true
-        ly.name = "hidden layer"
+        ly.name = LayerTypeName.hidden
         for _ in 0...3 {
             ly.addNeuron()
         }
@@ -44,7 +76,7 @@ class Layer: SKNode {
         
         let ly = Layer()
         ly.userInteractionEnabled = true
-        ly.name = "input layer"
+        ly.name = LayerTypeName.input
         for _ in 0...1 {
             ly.addNeuron()
         }
@@ -57,7 +89,7 @@ class Layer: SKNode {
         
         let ly = Layer()
         ly.userInteractionEnabled = true
-        ly.name = "output layer"
+        ly.name = LayerTypeName.output
         for _ in 0...3 {
             ly.addNeuron()
         }
@@ -83,26 +115,18 @@ class Layer: SKNode {
             return
         }
         
+
+        var nn:Neuron = Neuron.HiddenNeuron()
         
-        var newNeuron:Neuron
+        if name == LayerTypeName.input  { nn =  Neuron.InputNeuron()  }
+        if name == LayerTypeName.output { nn = Neuron.OutputNeuron()  }
         
-        if isInputLayer() {
-            newNeuron = Neuron.InputNeuron()
-        }
-            
-        else if isOutputLayer() {
-            newNeuron = Neuron.OutputNeuron()
-        }
-            
-        else {
-            newNeuron = Neuron.HiddenNeuron()
-        }
         
-        newNeuron.parentLayer = self
-        addChild(newNeuron)
-        
+        addChild(nn)
+        nn.parentLayer = self
         nodesDidChange()
     }
+    
     
     
     func delNeuron() {
@@ -118,18 +142,16 @@ class Layer: SKNode {
     
     
     
-    
-    
     func isOutputLayer() -> Bool {
-        return (name == "output layer")
+        return (name == LayerTypeName.output)
     }
     
     func isInputLayer() -> Bool {
-        return (name == "input layer")
+        return (name == LayerTypeName.input)
     }
     
     func isHiddenLayer() -> Bool {
-        return (name == "hidden layer")
+        return (name == LayerTypeName.hidden)
     }
     
     
@@ -195,10 +217,7 @@ class Layer: SKNode {
         
     }
     
-    override func rightMouseUp(theEvent: NSEvent) {
-        print(self)
-    }
-    
+
     func positionDidChange() {
         self.drawConnection()
         self.outLayer?.drawConnection()
