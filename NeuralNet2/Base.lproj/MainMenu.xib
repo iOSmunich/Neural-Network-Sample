@@ -106,7 +106,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="784" height="563"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-            <view key="contentView" id="372">
+            <view key="contentView" wantsLayer="YES" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="784" height="563"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -125,6 +125,19 @@
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="euT-MQ-2ZF">
                         <rect key="frame" x="126" y="25" width="67" height="32"/>
+                        <animations>
+                            <caTransition key="subviews">
+                                <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGJCVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKkHCBES
+EwsKGR9VJG51bGzUCQoLDA0ODxBWJGNsYXNzVHR5cGVXc3VidHlwZV8QEl9fQ0FDb2RpbmdDb250ZW50
+c4AIgAOAAoAEV2Zyb21Ub3BWbW92ZUlu0hQJFRhaTlMub2JqZWN0c6IWF4AFgAaAB9IaGxwdWiRjbGFz
+c25hbWVYJGNsYXNzZXNXTlNBcnJheaIcHlhOU09iamVjdNIaGyAhXENBVHJhbnNpdGlvbqMiIx5cQ0FU
+cmFuc2l0aW9uW0NBQW5pbWF0aW9uXxAPTlNLZXllZEFyY2hpdmVy0SYnVHJvb3SAAQAIABEAGgAjAC0A
+MgA3AEEARwBQAFcAXABkAHkAewB9AH8AgQCJAJAAlQCgAKMApQCnAKkArgC5AMIAygDNANYA2wDoAOwA
++QEFARcBGgEfAAAAAAAAAgEAAAAAAAAAKAAAAAAAAAAAAAAAAAAAASE
+</mutableData>
+                            </caTransition>
+                        </animations>
                         <buttonCell key="cell" type="push" title="stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AMj-ZX-8ln">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>

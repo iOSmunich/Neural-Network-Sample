@@ -50,11 +50,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func start(sender: AnyObject) {
+        scene.paused = false
+
         scene.start()
     }
 
     @IBAction func stop(sender: AnyObject) {
         
+        scene.paused = !scene.paused
+        
+        if let btn = sender as? NSButton {
+            btn.title = scene.paused ? "continue" : "stop"
+        }
     }
 
     @IBAction func del(sender: AnyObject) {
@@ -71,6 +78,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
 }
+
+
 
 extension SKView {
     

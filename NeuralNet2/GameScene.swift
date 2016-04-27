@@ -26,7 +26,7 @@ class GameScene: SKScene {
     func start() {
         showInfo_callback("start");
         let inputs = [1,1,1] as [CGFloat]
-        inLayer.setInputsAndRun(inputs)
+        inLayer.outLayer?.setInputsAndRun(inputs)
     }
 
     

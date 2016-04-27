@@ -32,17 +32,16 @@ class Neuron: SKNode {
     // MARK: neuron logic
     
     private (set) var weights:[CGFloat] = []
-    private (set) var bias:CGFloat = 0
-    private (set) var sum:CGFloat = 0
-    private (set) var output:CGFloat = 0
-    private (set) var inputs:[CGFloat] = []
+    private (set) var bias:CGFloat      = 0
+    private (set) var sum:CGFloat       = 0
+    private (set) var output:CGFloat    = 0
+    private (set) var inputs:[CGFloat]  = []
     
     
     
     
     
     func setInputsAndCalc(inputs:[CGFloat]) {
-        
         self.inputs = inputs
         syncWeights()
         calc()
@@ -53,9 +52,9 @@ class Neuron: SKNode {
 
     private func calc() {
         
-        self.setScale(1.2)
+        self.bgNode.setScale(1.2)
         self.runAction(SKAction.waitForDuration(0.3)) {
-            self.setScale(1.0)
+            self.bgNode.setScale(1.0)
         }
 
         //calc sum
@@ -65,11 +64,14 @@ class Neuron: SKNode {
         }
         sum += bias
         output = max(0,sum)
-        
+
+        print("\n")
         print("inputs  =",inputs)
         print("weights =",weights)
         print("sum     =",sum)
         print("output  =",output)
+        print("\n")
+
     }
     
     
@@ -89,11 +91,10 @@ class Neuron: SKNode {
     }
     
     
-    let gaussDistribution = GKGaussianDistribution(randomSource: GKRandomSource(), lowestValue: -1, highestValue: +1)
+    let gaussDistribution = GKGaussianDistribution(randomSource: GKARC4RandomSource(), lowestValue: -1000, highestValue: +1000)
     func randomWeight() -> CGFloat {
 
         let vv = gaussDistribution.nextUniform()
-        print("rand gaus float:",vv)
         return CGFloat(vv)
     }
     

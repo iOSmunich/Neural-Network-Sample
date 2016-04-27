@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		842DFF691CD16845002F4595 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DFF681CD16845002F4595 /* Parameters.swift */; };
 		845F768B1CD0BB0E00124CBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 845F768A1CD0BB0E00124CBF /* Assets.xcassets */; };
 		845F768E1CD0BB0E00124CBF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F768C1CD0BB0E00124CBF /* MainMenu.xib */; };
 		845F76961CD0BC6700124CBF /* Neuron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F76951CD0BC6700124CBF /* Neuron.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		842DFF681CD16845002F4595 /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		845F76811CD0BB0E00124CBF /* NeuralNet2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeuralNet2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		845F768A1CD0BB0E00124CBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		845F768D1CD0BB0E00124CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				845F76951CD0BC6700124CBF /* Neuron.swift */,
 				845F769B1CD0BC8600124CBF /* Layer.swift */,
+				842DFF681CD16845002F4595 /* Parameters.swift */,
 				845F76991CD0BC8000124CBF /* GameScene.swift */,
 				845F769D1CD0BC9C00124CBF /* AppDelegate.swift */,
 				845F768A1CD0BB0E00124CBF /* Assets.xcassets */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842DFF691CD16845002F4595 /* Parameters.swift in Sources */,
 				845F76961CD0BC6700124CBF /* Neuron.swift in Sources */,
 				845F769C1CD0BC8600124CBF /* Layer.swift in Sources */,
 				845F769E1CD0BC9C00124CBF /* AppDelegate.swift in Sources */,

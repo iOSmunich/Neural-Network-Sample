@@ -20,19 +20,60 @@ class Layer: SKNode {
     private (set) var outputs:[CGFloat] = []
     
     
-    func setInputsAndRun(inputs:[CGFloat]) {
     
-        self.inputs = inputs
-
+    
+    
+    
+    private let waitAction = SKAction.waitForDuration(0.3)
+    
+    
+    
+    func setInputsAndRun(inputs:[CGFloat]) {
         
-        //let each neuron do calc
-        for nn in neurons {
-            nn.setInputsAndCalc(self.inputs)
+        self.inputs = inputs
+        doFirst()
+    }
+    
+    
+    
+    
+    func doFirst() {
+        
+        let neurons = self.neurons
+        let inputs = self.inputs
+        var sequence:[SKAction] = []
+        
+        
+        //create a action sequence which calls neuron one after an other
+        for idx in 0...neurons.count-1 {
+            
+            let act = SKAction.runBlock({
+                neurons[idx].setInputsAndCalc(inputs)
+            })
+            
+            sequence.append(act)
+            sequence.append(waitAction)
         }
         
         
+        //add next step
+        sequence.append(
+            SKAction.runBlock({ 
+                self.doNext()
+            })
+        )
         
-        //let make output list
+        //start running
+        runAction(SKAction.sequence(sequence),withKey:"step" )
+    }
+    
+    
+    func doNext() {
+        
+        
+        
+        //update output list
+        
         outputs.removeAll()
         for nn in neurons {
             outputs.append(nn.output)
@@ -41,15 +82,15 @@ class Layer: SKNode {
         print("\n")
         print("layer output:",outputs)
         print("\n")
-
+        
         
         
         //call next layer to update
-        runAction(SKAction.waitForDuration(0.5)) { 
+        runAction(waitAction) {
             self.outLayer?.setInputsAndRun(self.outputs)
         }
+        
     }
-    
     
     
     
@@ -58,7 +99,7 @@ class Layer: SKNode {
     
     
     
-    struct LayerTypeName {
+    enum LayerTypeName {
         
         static let hidden = "input layer"
         static let input  = "hidden layer"
@@ -139,7 +180,7 @@ class Layer: SKNode {
             return
         }
         
-
+        
         var nn:Neuron = Neuron.HiddenNeuron()
         
         if name == LayerTypeName.input  { nn =  Neuron.InputNeuron()  }
@@ -241,7 +282,7 @@ class Layer: SKNode {
         
     }
     
-
+    
     func positionDidChange() {
         self.drawConnection()
         self.outLayer?.drawConnection()
