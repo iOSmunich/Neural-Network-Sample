@@ -1,40 +1,111 @@
 //
-//  GameScene.swift
-//  NeuralNet2
+//  Scene.swift
+//  NeuralNetwork
 //
-//  Created by admin on 16/4/27.
-//  Copyright (c) 2016年 admin. All rights reserved.
+//  Created by admin on 16/4/25.
+//  Copyright © 2016年 admin. All rights reserved.
 //
-
 import SpriteKit
+import Cocoa
 
 class GameScene: SKScene {
-    override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!"
-        myLabel.fontSize = 45
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+    
+    var inLayer = Layer.newInputLayer()
+    var outLayer = Layer.newOutputLayer()
+    
+    override init(size: CGSize) {
+        super.init(size: size)
         
-        self.addChild(myLabel)
+        addChild(inLayer)
+        addChild(outLayer)
+        
+        inLayer.outLayer = outLayer
+        outLayer.inLayer = inLayer
+        
+        
     }
     
-    override func mouseDown(theEvent: NSEvent) {
-        /* Called when a mouse click occurs */
-        
-        let location = theEvent.locationInNode(self)
-        
-        let sprite = SKSpriteNode(imageNamed:"Spaceship")
-        sprite.position = location;
-        sprite.setScale(0.5)
-        
-        let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-        sprite.runAction(SKAction.repeatActionForever(action))
-        
-        self.addChild(sprite)
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+    
+    
+    func drawConnections() {
+        
+        enumerateChildNodesWithName("*layer") { (node, _) in
+            let ly = node as! Layer
+            ly.drawConnection()
+        }
+        
+        
     }
+    
+    
+    func addHiddenLayer() {
+        
+        if children.count < 7 {
+            
+            outLayer.removeFromParent()
+            let newLayer = Layer.newHiddenLayer()
+            let lastLayer = outLayer.inLayer
+            
+            newLayer.inLayer = lastLayer
+            newLayer.outLayer = outLayer
+            lastLayer?.outLayer = newLayer
+            outLayer.inLayer = newLayer
+            
+            addChild(newLayer)
+            addChild(outLayer)
+            
+            
+            newLayer.drawConnection()
+            outLayer.drawConnection()
+        }
+        
+    }
+    
+    
+    
+    func delLayer() {
+        
+        if children.count > 2 {
+            
+            outLayer.removeFromParent()
+            
+            let inLayer = outLayer.inLayer?.inLayer
+            outLayer.inLayer?.removeFromParent()
+            outLayer.inLayer = inLayer
+            inLayer?.outLayer = outLayer
+            
+            addChild(outLayer)
+            outLayer.drawConnection()
+        }
+        
+    }
+    
+    
+    
+    
+    
+    override func addChild(node: SKNode) {
+        
+        if !children.isEmpty {
+            
+            var pos = children.last?.position
+            pos?.x += 50
+            node.position = pos!
+        }
+        
+        
+        super.addChild(node)
+    }
+    
+
 }
+
+
+
+
+

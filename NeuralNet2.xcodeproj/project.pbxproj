@@ -7,21 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		845F76851CD0BB0E00124CBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F76841CD0BB0E00124CBF /* AppDelegate.swift */; };
-		845F76871CD0BB0E00124CBF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F76861CD0BB0E00124CBF /* GameScene.swift */; };
-		845F76891CD0BB0E00124CBF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 845F76881CD0BB0E00124CBF /* GameScene.sks */; };
 		845F768B1CD0BB0E00124CBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 845F768A1CD0BB0E00124CBF /* Assets.xcassets */; };
 		845F768E1CD0BB0E00124CBF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F768C1CD0BB0E00124CBF /* MainMenu.xib */; };
+		845F76961CD0BC6700124CBF /* Neuron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F76951CD0BC6700124CBF /* Neuron.swift */; };
+		845F76981CD0BC6D00124CBF /* NeuronExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F76971CD0BC6D00124CBF /* NeuronExtension.swift */; };
+		845F769A1CD0BC8000124CBF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F76991CD0BC8000124CBF /* GameScene.swift */; };
+		845F769C1CD0BC8600124CBF /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F769B1CD0BC8600124CBF /* Layer.swift */; };
+		845F769E1CD0BC9C00124CBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F769D1CD0BC9C00124CBF /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		845F76811CD0BB0E00124CBF /* NeuralNet2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeuralNet2.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		845F76841CD0BB0E00124CBF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		845F76861CD0BB0E00124CBF /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		845F76881CD0BB0E00124CBF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		845F768A1CD0BB0E00124CBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		845F768D1CD0BB0E00124CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		845F768F1CD0BB0E00124CBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		845F76951CD0BC6700124CBF /* Neuron.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Neuron.swift; sourceTree = "<group>"; };
+		845F76971CD0BC6D00124CBF /* NeuronExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuronExtension.swift; sourceTree = "<group>"; };
+		845F76991CD0BC8000124CBF /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		845F769B1CD0BC8600124CBF /* Layer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		845F769D1CD0BC9C00124CBF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +58,11 @@
 		845F76831CD0BB0E00124CBF /* NeuralNet2 */ = {
 			isa = PBXGroup;
 			children = (
-				845F76841CD0BB0E00124CBF /* AppDelegate.swift */,
-				845F76861CD0BB0E00124CBF /* GameScene.swift */,
-				845F76881CD0BB0E00124CBF /* GameScene.sks */,
+				845F76951CD0BC6700124CBF /* Neuron.swift */,
+				845F76971CD0BC6D00124CBF /* NeuronExtension.swift */,
+				845F769B1CD0BC8600124CBF /* Layer.swift */,
+				845F76991CD0BC8000124CBF /* GameScene.swift */,
+				845F769D1CD0BC9C00124CBF /* AppDelegate.swift */,
 				845F768A1CD0BB0E00124CBF /* Assets.xcassets */,
 				845F768C1CD0BB0E00124CBF /* MainMenu.xib */,
 				845F768F1CD0BB0E00124CBF /* Info.plist */,
@@ -123,7 +129,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				845F768B1CD0BB0E00124CBF /* Assets.xcassets in Resources */,
-				845F76891CD0BB0E00124CBF /* GameScene.sks in Resources */,
 				845F768E1CD0BB0E00124CBF /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,8 +140,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				845F76871CD0BB0E00124CBF /* GameScene.swift in Sources */,
-				845F76851CD0BB0E00124CBF /* AppDelegate.swift in Sources */,
+				845F76981CD0BC6D00124CBF /* NeuronExtension.swift in Sources */,
+				845F76961CD0BC6700124CBF /* Neuron.swift in Sources */,
+				845F769C1CD0BC8600124CBF /* Layer.swift in Sources */,
+				845F769E1CD0BC9C00124CBF /* AppDelegate.swift in Sources */,
+				845F769A1CD0BC8000124CBF /* GameScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
