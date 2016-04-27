@@ -15,18 +15,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var skview: SKView!
     
-    var scene:GameScene?
+    var scene:GameScene!
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
         skview.showsFPS = true
         scene = GameScene.init(size: skview.frame.size)
         scene?.scaleMode = .ResizeFill
-        scene?.backgroundColor = SKColor.brownColor()
         scene?.anchorPoint = CGPoint(x: 0.1, y: 0.1)
         skview.presentScene(scene)
-        
-        let a = 1
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -35,8 +32,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     @IBAction func del(sender: AnyObject) {
+        scene.delLayer()
     }
     @IBAction func add(sender: AnyObject) {
+        scene.addHiddenLayer()
     }
 }
 
+extension SKView {
+    public override func scrollWheel(theEvent: NSEvent) {
+        
+        let nodes = scene?.nodesAtPoint(theEvent.locationInNode(scene!))
+        for node in nodes! {
+            node.scrollWheel(theEvent)
+        }
+
+    }
+}
