@@ -18,13 +18,9 @@ class Layer: SKNode {
     var outLayer:Layer?
     
     var neurons:[Neuron]{
-        
-        get {
-            return children.map({ (node) -> Neuron in
-                return (node as? Neuron)!
-            })
-        }
-        
+        return children.filter({ (node) -> Bool in
+            return node.isKindOfClass(Neuron)
+        }) as! [Neuron]
     }
     
     
