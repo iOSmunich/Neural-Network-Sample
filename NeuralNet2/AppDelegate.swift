@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         scene?.anchorPoint = CGPoint(x: 0.1, y: 0.1)
         skview.presentScene(scene)
         
+        let a = 1
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
