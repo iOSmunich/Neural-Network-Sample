@@ -23,7 +23,31 @@ class Layer: SKNode {
     func setInputsAndRun(inputs:[CGFloat]) {
     
         self.inputs = inputs
+
         
+        //let each neuron do calc
+        for nn in neurons {
+            nn.setInputsAndCalc(self.inputs)
+        }
+        
+        
+        
+        //let make output list
+        outputs.removeAll()
+        for nn in neurons {
+            outputs.append(nn.output)
+        }
+        
+        print("\n")
+        print("layer output:",outputs)
+        print("\n")
+
+        
+        
+        //call next layer to update
+        runAction(SKAction.waitForDuration(0.5)) { 
+            self.outLayer?.setInputsAndRun(self.outputs)
+        }
     }
     
     

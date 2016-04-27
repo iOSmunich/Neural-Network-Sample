@@ -5,8 +5,12 @@
 //  Created by admin on 16/4/25.
 //  Copyright © 2016年 admin. All rights reserved.
 //
+
+
 import SpriteKit
 import Cocoa
+import Foundation
+
 
 class GameScene: SKScene {
     
@@ -15,23 +19,24 @@ class GameScene: SKScene {
     // MARK: logic block
     
     
+    
+    
+    
+    
     func start() {
+        showInfo_callback("start");
         let inputs = [1,1,1] as [CGFloat]
         inLayer.setInputsAndRun(inputs)
-        
-        target?.performSelector(action, withObject:"abc")
     }
-        
-    
-    
+
     
     // MARK: GUI
     
-    var inLayer = Layer.newInputLayer()
-    var outLayer = Layer.newOutputLayer()
+    var inLayer     = Layer.newInputLayer()
+    var outLayer    = Layer.newOutputLayer()
     
-    var target:AnyObject?
-    var action:AnyObject?
+    
+    var showInfo_callback:((AnyObject) -> ())!
     
     
     

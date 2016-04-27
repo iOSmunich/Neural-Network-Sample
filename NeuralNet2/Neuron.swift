@@ -53,20 +53,30 @@ class Neuron: SKNode {
 
     private func calc() {
         
+        self.setScale(1.2)
+        self.runAction(SKAction.waitForDuration(0.3)) {
+            self.setScale(1.0)
+        }
 
         //calc sum
         sum = 0
-        for idx in 0...inputs.count {
-            sum += inputs[idx] * weights[idx]
+        for (idx,input) in inputs.enumerate() {
+            sum += input * weights[idx]
         }
         sum += bias
-        
         output = max(0,sum)
+        
+        print("inputs  =",inputs)
+        print("weights =",weights)
+        print("sum     =",sum)
+        print("output  =",output)
     }
     
     
     
     private func syncWeights() {
+        
+        
         
         //sync weights count
         while weights.count < inputs.count {

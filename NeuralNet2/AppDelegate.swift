@@ -27,7 +27,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         scene?.scaleMode = .ResizeFill
         scene?.anchorPoint = CGPoint(x: 0.1, y: 0.1)
         skview.presentScene(scene)
+        
+        
+        
+
+        
+        scene.showInfo_callback = { (msg:AnyObject) -> () in
+            
+            let infos = (msg as! String) + "\n"
+            self.txtField.stringValue.appendContentsOf(infos)
+        }
+        
     }
+    
+    
+    
+
+    
 
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
@@ -38,6 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func stop(sender: AnyObject) {
+        
     }
 
     @IBAction func del(sender: AnyObject) {
@@ -49,10 +66,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     
-    func showInfo(info:String) {
-        txtField.stringValue = "wfwfw\n"
-    }
-    
+
     
     
     
