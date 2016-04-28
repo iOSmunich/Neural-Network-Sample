@@ -26,7 +26,7 @@ class GameScene: SKScene {
     func start() {
         showInfo_callback("start");
         let inputs = [1,1,1] as [CGFloat]
-        inLayer.outLayer?.setInputsAndRun(inputs)
+        inLayer.setInputsAndRun(inputs)
     }
 
     
@@ -47,6 +47,8 @@ class GameScene: SKScene {
         addChild(outLayer)
         
         inLayer.outLayer = outLayer
+        inLayer.drawConnection()
+        outLayer.drawConnection()
         
     }
     

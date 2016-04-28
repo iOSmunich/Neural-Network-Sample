@@ -11,6 +11,8 @@ import Cocoa
 import SpriteKit
 
 
+
+
 class Layer: SKNode {
     
     
@@ -18,26 +20,35 @@ class Layer: SKNode {
     
     private (set) var inputs:[CGFloat] = []
     private (set) var outputs:[CGFloat] = []
+    private (set) var totalErr:[CGFloat] = []
     
     
-    
-    
-    
-    
-    private let waitAction = SKAction.waitForDuration(0.3)
     
     
     
     func setInputsAndRun(inputs:[CGFloat]) {
         
         self.inputs = inputs
-        doFirst()
+        
+        if type == LayerTypeName.input {
+
+            syncNeuronCountToInputsCount()
+            outputs = inputs
+            outLayer?.setInputsAndRun(inputs)
+
+        }
+            
+            
+        else {
+            updateNeuronsAndRun()
+        }
+        
     }
     
     
     
     
-    func doFirst() {
+    func updateNeuronsAndRun() {
         
         let neurons = self.neurons
         let inputs = self.inputs
@@ -58,8 +69,8 @@ class Layer: SKNode {
         
         //add next step
         sequence.append(
-            SKAction.runBlock({ 
-                self.doNext()
+            SKAction.runBlock({
+                self.updateOutputsAndCallNextLayer()
             })
         )
         
@@ -68,7 +79,7 @@ class Layer: SKNode {
     }
     
     
-    func doNext() {
+    func updateOutputsAndCallNextLayer() {
         
         
         
@@ -97,28 +108,47 @@ class Layer: SKNode {
     // MARK: Layer GUI
     
     
-    
-    
-    enum LayerTypeName {
-        
-        static let hidden = "input layer"
-        static let input  = "hidden layer"
-        static let output = "output layer"
-    }
-    
-    
+    private (set) var type:String = LayerTypeName.unkown
     private (set) var inLayer:Layer?
+    
+    
+    
+    
+    
+    
+    
+    
     var outLayer:Layer? {
         didSet {
             outLayer?.inLayer = self
         }
     }
     
-    var neurons:[Neuron]{
+    var neurons:[Neuron] {
         return children.filter({ (node) -> Bool in
             return node is Neuron
         }) as! [Neuron]
     }
+    
+
+    
+    
+    
+
+    
+    func syncNeuronCountToInputsCount() {
+
+        while inputs.count > self.neurons.count {
+            self.addNeuron()
+        }
+        
+        while inputs.count < self.neurons.count {
+            self.delNeuron()
+        }
+        
+    }
+    
+    
     
     
     
@@ -130,6 +160,8 @@ class Layer: SKNode {
         let ly = Layer()
         ly.userInteractionEnabled = true
         ly.name = LayerTypeName.hidden
+        ly.type = LayerTypeName.hidden
+        
         for _ in 0...3 {
             ly.addNeuron()
         }
@@ -142,6 +174,8 @@ class Layer: SKNode {
         let ly = Layer()
         ly.userInteractionEnabled = true
         ly.name = LayerTypeName.input
+        ly.type = LayerTypeName.input
+        
         for _ in 0...1 {
             ly.addNeuron()
         }
@@ -155,6 +189,8 @@ class Layer: SKNode {
         let ly = Layer()
         ly.userInteractionEnabled = true
         ly.name = LayerTypeName.output
+        ly.type = LayerTypeName.output
+        
         for _ in 0...3 {
             ly.addNeuron()
         }
@@ -183,7 +219,7 @@ class Layer: SKNode {
         
         var nn:Neuron = Neuron.HiddenNeuron()
         
-        if name == LayerTypeName.input  { nn =  Neuron.InputNeuron()  }
+        if name == LayerTypeName.input  { nn = Neuron.InputNeuron()   }
         if name == LayerTypeName.output { nn = Neuron.OutputNeuron()  }
         
         
@@ -204,24 +240,6 @@ class Layer: SKNode {
         lastNode?.removeFromParent()
         nodesDidChange()
     }
-    
-    
-    
-    func isOutputLayer() -> Bool {
-        return (name == LayerTypeName.output)
-    }
-    
-    func isInputLayer() -> Bool {
-        return (name == LayerTypeName.input)
-    }
-    
-    func isHiddenLayer() -> Bool {
-        return (name == LayerTypeName.hidden)
-    }
-    
-    
-    
-    
     
     
     

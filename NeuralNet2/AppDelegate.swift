@@ -23,6 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
         skview.showsFPS = true
+        skview.showsNodeCount = true
+        skview.showsQuadCount = true
+        skview.ignoresSiblingOrder = true
+        
         scene = GameScene.init(size: skview.frame.size)
         scene?.scaleMode = .ResizeFill
         scene?.anchorPoint = CGPoint(x: 0.1, y: 0.1)
@@ -42,14 +46,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     
-
     
 
-    func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
-    }
     
-    @IBAction func start(sender: AnyObject) {
+    
+    
+    
+    @IBAction func start(_: AnyObject) {
         scene.paused = false
 
         scene.start()
@@ -60,24 +63,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         scene.paused = !scene.paused
         
         if let btn = sender as? NSButton {
-            btn.title = scene.paused ? "continue" : "stop"
+            btn.title = scene.paused ? "go on" : "stop"
         }
     }
 
-    @IBAction func del(sender: AnyObject) {
+    @IBAction func del(_: AnyObject) {
         scene.delLayer()
     }
-    @IBAction func add(sender: AnyObject) {
+    
+    
+    @IBAction func add(_: AnyObject) {
         scene.addHiddenLayer()
     }
     
-    
-    
 
-    
-    
+    @IBAction func bp(abc: AnyObject) {
+        print("bp")
+        
+        let node = scene.inLayer.neurons.first!
+        let pos = scene.convertPoint(node.position, fromNode: node.parent!)
+        let po1 = skview.convertPoint(pos, fromScene: scene)
+        let po2 = skview.convertPoint(po1, toView: skview.superview)
+        
+        let btn = abc as! NSButton
+        btn.setFrameOrigin(po2)
+    }
     
 }
+
+
+
+
 
 
 

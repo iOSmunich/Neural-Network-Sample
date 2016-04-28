@@ -15,27 +15,22 @@ class Neuron: SKNode {
     // MARK: properties
     
     private var bgNode:BgNode = BgNode(color: SKColor.grayColor(), size:CGSizeMake(20, 20))
-    
     private let lines:SKNode = SKNode()
     
+    
+    
     var parentLayer:Layer!
-    
-    
-    var inputNeurons:[Neuron]? {
-        return parentLayer?.inLayer?.neurons
-    }
-    
-    
+    var type:String! = NeuronType.unkown
+    var inputNeurons:[Neuron]? { return parentLayer?.inLayer?.neurons }
     
     
     
     // MARK: neuron logic
-    
+    private (set) var inputs:[CGFloat]  = []
     private (set) var weights:[CGFloat] = []
     private (set) var bias:CGFloat      = 0
     private (set) var sum:CGFloat       = 0
     private (set) var output:CGFloat    = 0
-    private (set) var inputs:[CGFloat]  = []
     
     
     
@@ -91,9 +86,7 @@ class Neuron: SKNode {
     }
     
     
-    let gaussDistribution = GKGaussianDistribution(randomSource: GKARC4RandomSource(), lowestValue: -1000, highestValue: +1000)
     func randomWeight() -> CGFloat {
-
         let vv = gaussDistribution.nextUniform()
         return CGFloat(vv)
     }
@@ -105,7 +98,8 @@ class Neuron: SKNode {
     class func InputNeuron() -> Neuron {
         
         let nn = Neuron.HiddenNeuron()
-        nn.name = "input neuron"
+        nn.name = NeuronType.input
+        nn.type = NeuronType.input
         nn.bgNode.color = SKColor.redColor()
         return nn
     }
@@ -118,7 +112,8 @@ class Neuron: SKNode {
     class func OutputNeuron() -> Neuron {
         
         let nn = Neuron.HiddenNeuron()
-        nn.name = "output neuron"
+        nn.name = NeuronType.output
+        nn.type = NeuronType.output
         nn.bgNode.color = SKColor.greenColor()
         return nn
     }
@@ -131,15 +126,21 @@ class Neuron: SKNode {
     class func HiddenNeuron() -> Neuron {
         
         let nn = Neuron()
-        nn.name = "neuron"
-        nn.addChild(nn.bgNode)
+        nn.name = NeuronType.hidden
+        nn.type = NeuronType.hidden
         
-        nn.bgNode.name = "neuron bg node"
-        nn.lines.name = "lines"
+        
+        nn.addChild(nn.bgNode)
+        nn.bgNode.name = NeuronType.subType.bgNode
+        
+        
+        nn.lines.name = NeuronType.subType.line
         nn.lines.zPosition = -100
         nn.lines.userInteractionEnabled = true
-        
         nn.addChild(nn.lines)
+        
+        
+        
         return nn
     }
     
@@ -150,6 +151,13 @@ class Neuron: SKNode {
     // MARK: draw function
     
     func drawConnections() {
+
+        
+        guard showSpline else {
+            lines.hidden = true
+            return
+        }
+        
         
         guard let _ = inputNeurons else {
             return
@@ -173,10 +181,9 @@ class Neuron: SKNode {
             var points:[CGPoint] = [p0,p1,p2,p3]
             
             let spline = SKShapeNode(splinePoints: &points, count: 4)
-            spline.name = "spline"
+            spline.name = NeuronType.subType.spline
             spline.zPosition = -100
             lines.addChild(spline)
-            
         }
         
     }
