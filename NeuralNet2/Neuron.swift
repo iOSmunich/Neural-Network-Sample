@@ -12,16 +12,11 @@ import GameplayKit.GKRandomSource
 
 class Neuron: SKNode {
     
-    // MARK: properties
+
     
-    private var bgNode:BgNode = BgNode(color: SKColor.grayColor(), size:CGSizeMake(20, 20))
-    private let lines:SKNode = SKNode()
-    
-    
-    
-    var parentLayer:Layer!
-    var type:String! = NeuronType.unkown
-    var inputNeurons:[Neuron]? { return parentLayer?.inLayer?.neurons }
+    var target:CGFloat!
+    var delta:CGFloat!
+    var totalErr:CGFloat!
     
     
     
@@ -71,6 +66,26 @@ class Neuron: SKNode {
     
     
     
+    // MARK: properties
+    
+    private var bgNode:BgNode = BgNode(color: SKColor.grayColor(), size:CGSizeMake(20, 20))
+    private let lines:SKNode = SKNode()
+    
+    
+    
+    var parentLayer:Layer!
+    var type:String! = NeuronType.unkown
+    var inputNeurons:[Neuron]? { return parentLayer?.inLayer?.neurons }
+    
+    
+}
+
+
+
+extension Neuron {
+    
+    
+    
     private func syncWeights() {
         
         
@@ -84,6 +99,7 @@ class Neuron: SKNode {
         }
         
     }
+    
     
     
     func randomWeight() -> CGFloat {
@@ -103,9 +119,6 @@ class Neuron: SKNode {
         nn.bgNode.color = SKColor.redColor()
         return nn
     }
-    
-    
-    
     
     
     
@@ -145,13 +158,20 @@ class Neuron: SKNode {
     }
     
     
-    
+    private func updateLineWidth() {
+        
+        for (idx,line) in lines.children.enumerate() {
+            let spline = line as! SKShapeNode
+            spline.lineWidth = CGFloat(abs(weights[idx]))
+            
+        }
+    }
     
     
     // MARK: draw function
     
     func drawConnections() {
-
+        
         
         guard showSpline else {
             lines.hidden = true
@@ -190,17 +210,8 @@ class Neuron: SKNode {
     
     
     
-    private func updateLineWidth() {
-        
-        for (idx,line) in lines.children.enumerate() {
-            let spline = line as! SKShapeNode
-            spline.lineWidth = CGFloat(abs(weights[idx]))
-        
-        }
-    }
-    
-    
 }
+
 
 
 // MARK: background node extension for mouse event handler
@@ -229,7 +240,6 @@ class BgNode: SKSpriteNode {
     
     
 }
-
 
 
 

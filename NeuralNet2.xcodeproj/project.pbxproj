@@ -18,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		842DFF681CD16845002F4595 /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
+		845BC6B21CD2490D00BF4D35 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		845F76811CD0BB0E00124CBF /* NeuralNet2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeuralNet2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		845F768A1CD0BB0E00124CBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		845F768D1CD0BB0E00124CBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		845F76781CD0BB0E00124CBF = {
 			isa = PBXGroup;
 			children = (
+				845BC6B21CD2490D00BF4D35 /* MyPlayground.playground */,
 				845F76831CD0BB0E00124CBF /* NeuralNet2 */,
 				845F76821CD0BB0E00124CBF /* Products */,
 			);

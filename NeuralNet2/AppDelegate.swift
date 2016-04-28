@@ -58,12 +58,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         scene.start()
     }
 
-    @IBAction func stop(sender: AnyObject) {
+    @IBAction func pause(sender: AnyObject) {
         
         scene.paused = !scene.paused
         
         if let btn = sender as? NSButton {
-            btn.title = scene.paused ? "go on" : "stop"
+            btn.title = scene.paused ? "continue" : "pause"
         }
     }
 
@@ -78,15 +78,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
 
     @IBAction func bp(abc: AnyObject) {
-        print("bp")
         
-        let node = scene.inLayer.neurons.first!
-        let pos = scene.convertPoint(node.position, fromNode: node.parent!)
-        let po1 = skview.convertPoint(pos, fromScene: scene)
-        let po2 = skview.convertPoint(po1, toView: skview.superview)
+        let outLayer = scene.outLayer
+        let targets:[CGFloat] = [1,2,3]
+        outLayer.setTargetValuesAndBeginBP(targets)
         
-        let btn = abc as! NSButton
-        btn.setFrameOrigin(po2)
+        
     }
     
 }

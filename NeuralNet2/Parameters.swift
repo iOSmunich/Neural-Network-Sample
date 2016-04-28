@@ -52,3 +52,52 @@ let showPrintInfo   = true
 
 let learnRate = 0.03
 
+
+
+extension NSTimer {
+    
+    
+
+    static public func runBlockAfterDelay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+    
+    
+    static public func runBlockAfterDelayWithCompletion(delay:Double, closure:()->(), complection:()->()) {
+        
+        
+        
+        let now = DISPATCH_TIME_NOW
+        let nsecs = delay * Double(NSEC_PER_SEC)
+        let isecs = dispatch_time(now, Int64(nsecs))
+        let mainQ = dispatch_get_main_queue()
+        
+        let block:()->() = {
+            closure()
+            complection()
+        }
+
+        dispatch_after(isecs, mainQ, block)
+
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

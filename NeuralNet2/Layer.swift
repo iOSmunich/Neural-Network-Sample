@@ -21,9 +21,35 @@ class Layer: SKNode {
     private (set) var inputs:[CGFloat] = []
     private (set) var outputs:[CGFloat] = []
     private (set) var totalErr:[CGFloat] = []
+    private (set) var targets:[CGFloat] = []
     
     
     
+    func setTargetValuesAndBeginBP(targets:[CGFloat]) {
+        self.targets = targets
+        
+        self.setScale(1.2)
+        
+        NSTimer.runBlockAfterDelay(0.1) {
+            self.doNext()
+        }
+        
+    }
+    
+    
+    func doNext() {
+        self.setScale(1.0)
+        
+        if hasPre {
+            pre.setTargetValuesAndBeginBP(self.targets)
+        }
+            
+        else if hasNext {
+            next.setInputsAndRun(self.inputs)
+        }
+        
+        
+    }
     
     
     func setInputsAndRun(inputs:[CGFloat]) {
@@ -31,17 +57,18 @@ class Layer: SKNode {
         self.inputs = inputs
         
         if type == LayerTypeName.input {
-
+            
             syncNeuronCountToInputsCount()
             outputs = inputs
             outLayer?.setInputsAndRun(inputs)
-
-        }
             
+        }
             
         else {
             updateNeuronsAndRun()
         }
+        
+        
         
     }
     
@@ -79,6 +106,11 @@ class Layer: SKNode {
     }
     
     
+    
+    
+    
+    
+    
     func updateOutputsAndCallNextLayer() {
         
         
@@ -105,6 +137,16 @@ class Layer: SKNode {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // MARK: Layer GUI
     
     
@@ -113,31 +155,8 @@ class Layer: SKNode {
     
     
     
-    
-    
-    
-    
-    
-    var outLayer:Layer? {
-        didSet {
-            outLayer?.inLayer = self
-        }
-    }
-    
-    var neurons:[Neuron] {
-        return children.filter({ (node) -> Bool in
-            return node is Neuron
-        }) as! [Neuron]
-    }
-    
-
-    
-    
-    
-
-    
     func syncNeuronCountToInputsCount() {
-
+        
         while inputs.count > self.neurons.count {
             self.addNeuron()
         }
@@ -149,6 +168,36 @@ class Layer: SKNode {
     }
     
     
+    var outLayer:Layer? {
+        didSet {
+            outLayer?.inLayer = self
+        }
+    }
+    
+    
+}
+
+
+
+
+//gui class function
+extension Layer {
+    
+    
+    var hasPre:Bool { return inLayer != nil  }
+    var hasNext:Bool { return outLayer != nil }
+    
+    var pre:Layer { return inLayer! }
+    var next:Layer { return outLayer! }
+    
+    
+    
+    
+    var neurons:[Neuron] {
+        return children.filter({ (node) -> Bool in
+            return node is Neuron
+        }) as! [Neuron]
+    }
     
     
     
@@ -206,6 +255,12 @@ class Layer: SKNode {
     }
     
     
+    
+    
+    
+    
+    
+    
     // MARK:UI Logic
     
     
@@ -242,7 +297,6 @@ class Layer: SKNode {
     }
     
     
-    
     override func addChild(node: SKNode) {
         
         if !children.isEmpty {
@@ -253,10 +307,6 @@ class Layer: SKNode {
         }
         super.addChild(node)
     }
-    
-    
-    
-    
     
     
     
@@ -285,8 +335,6 @@ class Layer: SKNode {
     
     
     
-    
-    
     override func mouseDragged(theEvent: NSEvent) {
         
         var newPos = self.position
@@ -311,7 +359,9 @@ class Layer: SKNode {
         self.outLayer?.drawConnection()
         
     }
+    
 }
+
 
 
 
